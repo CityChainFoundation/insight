@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -40,63 +41,85 @@ namespace City.Chain.Insight.Controllers
         [HttpGet("currency")]
         public async Task<ActionResult<ApiResponse<CurrencyDetails>>> GetCurrencyDetails()
         {
-            CurrencyDetails currencyDetails;
-
-            if (!cache.TryGetValue(CacheKeys.CurrencyDetails, out currencyDetails))
+            try
             {
-                // TODO: Funds should be stored in MongoDB, and be editable by individual chains and not hard-coded.
-                currencyDetails = new CurrencyDetails();
+                CurrencyDetails currencyDetails;
 
-                currencyDetails.Name = "City Coin";
-                currencyDetails.Symbol = "CITY";
-
-                double premine = 13736000000;
-
-                var funds = RetrieveFunds();
-
-                double walletsBalance = 0;
-                double originalBalance = 0;
-
-                foreach (var fund in funds)
+                if (!cache.TryGetValue(CacheKeys.CurrencyDetails, out currencyDetails))
                 {
-                    var address = this.blockService.GetTransactionsByAddress(fund.Address);
-                    currencyDetails.Wallets.Add(address);
+                    // TODO: Funds should be stored in MongoDB, and be editable by individual chains and not hard-coded.
+                    currencyDetails = new CurrencyDetails();
 
-                    walletsBalance += address.Balance;
-                    originalBalance += fund.InitialAmount;
+                    currencyDetails.Name = "City Coin";
+                    currencyDetails.Symbol = "CITY";
+                    currencyDetails.Logo = "https://city-chain.org/images/icons/city-coin-128x128.png";
+
+                    currencyDetails.Urls = new Urls();
+                    currencyDetails.Urls.Website.Add("https://city-chain.org/");
+                    currencyDetails.Urls.Website.Add("https://citychain.foundation/");
+                    currencyDetails.Urls.Explorer.Add("https://explorer.city-chain.org/");
+                    currencyDetails.Urls.Source.Add("https://github.com/CityChainFoundation/");
+                    currencyDetails.Urls.Board.Add("https://bitcointalk.org/index.php?topic=5073402.0");
+                    currencyDetails.Urls.Board.Add("https://cryptocurrencytalk.com/topic/114297-anncity-city-chain-blockchain-for-the-smart-city-platform/");
+                    currencyDetails.Urls.Chat.Add("https://t.me/citychain");
+                    currencyDetails.Urls.Chat.Add("https://discord.gg/CD8CTJt");
+                    currencyDetails.Urls.Reddit.Add("https://www.reddit.com/user/citychain");
+                    currencyDetails.Urls.Twitter.Add("https://twitter.com/citychaincoin");
+
+                    double premine = 13736000000;
+
+                    var funds = RetrieveFunds();
+
+                    double walletsBalance = 0;
+                    double originalBalance = 0;
+
+                    foreach (var fund in funds)
+                    {
+                        var address = this.blockService.GetTransactionsByAddress(fund.Address);
+                        currencyDetails.Wallets.Add(address);
+
+                        walletsBalance += address.Balance;
+                        originalBalance += fund.InitialAmount;
+                    }
+
+                    var latestBlock = this.blockService.GetLatestBlock();
+
+                    // Even though some of the initial blocks was POW with reward output of 2, we'll calculate as if all was POS with 20 reward.
+                    var rewardBalance = latestBlock.BlockIndex * 20;
+
+                    // To calculate the approximate total supply, we do the following:
+                    // PREMINE + REWARD.
+                    double totalSupply = premine + rewardBalance;
+
+                    // To calculate the approximate circulating supply, we do the following:
+                    // Number of days since genesis to find the funds daily amount to spend.
+                    var days = (365 * 200);
+                    var spendablePrDay = originalBalance / days;
+                    var genesisDate = new DateTime(2018, 10, 2, 12, 0, 0, DateTimeKind.Utc);
+                    var daysSinceGenesis = (DateTime.UtcNow - genesisDate).TotalDays;
+
+                    // Take the total amount that the funds have received + the reward balance thus far.
+                    double circulatingSupply = (spendablePrDay * daysSinceGenesis) + rewardBalance;
+
+                    // There is no value in showing decimals, so round the values before returning.
+                    currencyDetails.CirculatingSupply = Math.Round(circulatingSupply, 0);
+                    currencyDetails.TotalSupply = Math.Round(totalSupply, 0);
+
+                    // var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(3));
+                    var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+
+                    // Save data in cache.
+                    cache.Set(CacheKeys.CurrencyDetails, currencyDetails, cacheEntryOptions);
                 }
 
-                var latestBlock = this.blockService.GetLatestBlock();
-
-                // Even though some of the initial blocks was POW with reward output of 2, we'll calculate as if all was POS with 20 reward.
-                var rewardBalance = latestBlock.BlockIndex * 20;
-
-                // To calculate the approximate total supply, we do the following:
-                // PREMINE + REWARD.
-                double totalSupply = premine + rewardBalance;
-
-                // To calculate the approximate circulating supply, we do the following:
-                // Number of days since genesis to find the funds daily amount to spend.
-                var days = (365 * 200);
-                var spendablePrDay = originalBalance / days;
-                var genesisDate = new DateTime(2018, 10, 2, 12, 0, 0, DateTimeKind.Utc);
-                var daysSinceGenesis = (DateTime.UtcNow - genesisDate).TotalDays;
-
-                // Take the total amount that the funds have received + the reward balance thus far.
-                double circulatingSupply = (spendablePrDay * daysSinceGenesis) + rewardBalance;
-
-                // There is no value in showing decimals, so round the values before returning.
-                currencyDetails.CirculatingSupply = Math.Round(circulatingSupply, 0);
-                currencyDetails.TotalSupply = Math.Round(totalSupply, 0);
-
-                // var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(3));
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-
-                // Save data in cache.
-                cache.Set(CacheKeys.CurrencyDetails, currencyDetails, cacheEntryOptions);
+                return new ApiResponse<CurrencyDetails>(200, "Success", currencyDetails);
             }
-
-            return new ApiResponse<CurrencyDetails>(200, "Success", currencyDetails);
+            catch (Exception ex)
+            {
+                var error = new ApiError(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return new ApiResponse<CurrencyDetails>(500, "Error", null, error);
+            }
         }
 
         [HttpGet("funds")]

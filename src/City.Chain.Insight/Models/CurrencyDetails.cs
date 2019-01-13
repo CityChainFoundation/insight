@@ -20,12 +20,19 @@ namespace City.Chain.Insight.Models
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
 
+        [JsonProperty("logo")]
+        public string Logo { get; set; }
+
         [JsonProperty("circulatingSupply")]
         public double CirculatingSupply { get; set; }
 
         [JsonProperty("totalSupply")]
         public double TotalSupply { get; set; }
 
+        [JsonProperty("urls")]
+        public Urls Urls { get; set; }
+
+        [JsonProperty("wallets")]
         public List<AddressModel> Wallets { get; set; }
     }
 }
