@@ -3,6 +3,6 @@
     "Name": "city-chain-insight"
   },
   "Nako": {
-    "ApiUrl": "http://indexer.city-chain.org/api"
+    "ApiUrl": ""
   }
 }
