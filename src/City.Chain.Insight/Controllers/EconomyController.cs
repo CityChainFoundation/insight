@@ -66,12 +66,12 @@ namespace City.Chain.Insight.Controllers
                     currencyDetails.Urls.Reddit.Add("https://www.reddit.com/user/citychain");
                     currencyDetails.Urls.Twitter.Add("https://twitter.com/citychaincoin");
 
-                    double premine = 13736000000;
+                    decimal premine = 13736000000;
 
                     var funds = RetrieveFunds();
 
-                    double walletsBalance = 0;
-                    double originalBalance = 0;
+                    decimal walletsBalance = 0;
+                    decimal originalBalance = 0;
 
                     foreach (var fund in funds)
                     {
@@ -89,17 +89,17 @@ namespace City.Chain.Insight.Controllers
 
                     // To calculate the approximate total supply, we do the following:
                     // PREMINE + REWARD.
-                    double totalSupply = premine + rewardBalance;
+                    decimal totalSupply = premine + rewardBalance;
 
                     // To calculate the approximate circulating supply, we do the following:
                     // Number of days since genesis to find the funds daily amount to spend.
                     var days = (365 * 200);
-                    var spendablePrDay = originalBalance / days;
+                    decimal spendablePrDay = (originalBalance / days);
                     var genesisDate = new DateTime(2018, 10, 2, 12, 0, 0, DateTimeKind.Utc);
-                    var daysSinceGenesis = (DateTime.UtcNow - genesisDate).TotalDays;
+                    decimal daysSinceGenesis = (decimal)(DateTime.UtcNow - genesisDate).TotalDays;
 
                     // Take the total amount that the funds have received + the reward balance thus far.
-                    double circulatingSupply = (spendablePrDay * daysSinceGenesis) + rewardBalance;
+                    decimal circulatingSupply = (spendablePrDay * daysSinceGenesis) + rewardBalance;
 
                     // There is no value in showing decimals, so round the values before returning.
                     currencyDetails.CirculatingSupply = Math.Round(circulatingSupply, 0);
@@ -140,6 +140,20 @@ namespace City.Chain.Insight.Controllers
             }
 
             return new ApiResponse<List<Fund>>(200, "Success", funds);
+        }
+
+        [HttpGet("currency/circulating")]
+        public async Task<ActionResult<decimal>> GetCirculatingSupply()
+        {
+            var result = await GetCurrencyDetails();
+            return result.Value.Result.TotalSupply;
+        }
+
+        [HttpGet("currency/total")]
+        public async Task<ActionResult<decimal>> GetTotalSupply()
+        {
+            var result = await GetCurrencyDetails();
+            return result.Value.Result.TotalSupply;
         }
 
         private List<Fund> RetrieveFunds()

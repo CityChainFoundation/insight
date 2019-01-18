@@ -17,13 +17,13 @@ namespace City.Chain.Insight.Models.ApiModels
 
         public string Address { get; set; }
 
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
 
-        public double TotalReceived { get; set; }
+        public decimal TotalReceived { get; set; }
 
-        public double TotalSent { get; set; }
+        public decimal TotalSent { get; set; }
 
-        public double UnconfirmedBalance { get; set; }
+        public decimal UnconfirmedBalance { get; set; }
 
         public List<TransactionModel> Transactions { get; set; }
 

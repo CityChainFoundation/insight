@@ -15,6 +15,6 @@ namespace City.Chain.Insight.Models
 
         public string Logo { get; set; }
 
-        public double InitialAmount { get; set; }
+        public decimal InitialAmount { get; set; }
     }
 }

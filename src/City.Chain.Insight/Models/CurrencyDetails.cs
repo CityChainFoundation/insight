@@ -24,10 +24,10 @@ namespace City.Chain.Insight.Models
         public string Logo { get; set; }
 
         [JsonProperty("circulatingSupply")]
-        public double CirculatingSupply { get; set; }
+        public decimal CirculatingSupply { get; set; }
 
         [JsonProperty("totalSupply")]
-        public double TotalSupply { get; set; }
+        public decimal TotalSupply { get; set; }
 
         [JsonProperty("urls")]
         public Urls Urls { get; set; }
