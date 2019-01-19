@@ -146,7 +146,7 @@ namespace City.Chain.Insight.Controllers
         public async Task<ActionResult<decimal>> GetCirculatingSupply()
         {
             var result = await GetCurrencyDetails();
-            return result.Value.Result.TotalSupply;
+            return result.Value.Result.CirculatingSupply;
         }
 
         [HttpGet("currency/total")]
