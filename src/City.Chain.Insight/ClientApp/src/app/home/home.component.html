@@ -1,17 +1,59 @@
-<h1>Welcome to City Chain Insight</h1>
+<div fxLayout="row" fxLayout.xs="column" class="header-container">
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title>{{currency?.circulatingSupply}} {{currency?.symbol}}</mat-card-title>
+      <mat-card-subtitle>Circulating Supply</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>The circulating supply is calculated based on spendable coins pr. day for funds in addition to all the staking
+        rewards since genesis. <a href="/api/economy/currency/circulating" target="_blank">API link</a></p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title>{{currency?.totalSupply}} {{currency?.symbol}}</mat-card-title>
+      <mat-card-subtitle>Total Supply</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>The total supply is calculated based on premine fund wallets in addition to all the staking
+        rewards since genesis. <a href="/api/economy/currency/total" target="_blank">API link</a></p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div fxLayout="row" fxLayout.xs="column" class="content-container">
+  <div>
+        <h2>Quick links</h2>
+        <p>
+          Get details on City Chain, including circulating supply:<br />
+          <a href="/api/economy/currency">/api/economy/currency</a>
+        </p>
+        <p>
+          Get the fund wallets that received donations:<br />
+          <a href="/api/economy/funds">/api/economy/funds</a>
+        </p>
+  </div>
+
+  <div>
+      <h2>Community</h2>
+      <p class="community-links">
+        <a href="https://www.coingecko.com/en/coins/city-coin" target="_blank"><img src="https://static.coingecko.com/s/coingecko-logo-914bb72fab0df2d908e6123221470802f1bfac637b0f90399a3341c753f6bc52.png"></a>
+      </p>
+
+      <h2>Exchanges</h2>
+      <p class="community-links">
+        <a href="https://p2pb2b.io/trade/CITY_BTC" target="_blank"><img src="assets/p2pb2b.png"></a>
+      </p>
+  </div>
+
+</div>
+
 <p>
-  This portal is under development, check the <a href="/swagger">Open API documentation</a> until UI is ready.
-</p>
-<h2>Quick links</h2>
-<p>
-  Get details on City Chain, including circulating supply:<br />
-  <a href="https://insight.city-chain.org/api/economy/currency">https://insight.city-chain.org/api/economy/currency</a>
+    This portal is under development, check the <a href="/swagger">Open API documentation</a> until UI is ready.
   </p>
-  <p>
-  Get the fund wallets that received donations:<br />
-  <a href="https://insight.city-chain.org/api/economy/funds">https://insight.city-chain.org/api/economy/funds</a>
-</p>
+
 <p>&nbsp;</p>
-<p class="centered">
-  <img src="http://city-chain.org/images/logo/city-chain-gold-100x.png" />
-</p>
+<div class="centered footer">
+  <a href="https://city-chain.org/"><img src="http://city-chain.org/images/logo/city-chain-gold-100x.png" /></a>
+</div>

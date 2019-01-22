@@ -1,4 +1,25 @@
+
+
+
+.frame
+{
+
+  margin: auto;
+  padding: 40px;
+}
+
+.frame-content
+{
+  background-color: white;
+}
+
+
 @media (max-width: 767px) {
+  .frame
+  {
+    padding: 20px;
+  }
+
   /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
   .body-content {
     padding-top: 50px;

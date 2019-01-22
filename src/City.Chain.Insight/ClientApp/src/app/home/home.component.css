@@ -1,3 +1,58 @@
 .centered {
   text-align: center;
 }
+
+
+.dashboard-cards {
+ clear: both; 
+}
+
+.dashboard-card {
+  
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.community-links
+{}
+
+.community-links img {
+  max-width: 240px;
+}
+
+.header-container {
+  padding: 10px;
+}
+
+.header-container > mat-card {
+  width: 50%;
+}
+
+.content-container {
+
+}
+
+.content-container > div {
+  padding: 10px;
+  width: 50%;
+}
+
+.footer {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.footer img {
+  max-width: 200px;
+}
+
+
+@media (max-width: 658px) {
+  .header-container > mat-card {
+    width: 100%;
+  }
+
+  .content-container > div {
+    width: 100%;
+  }
+}
