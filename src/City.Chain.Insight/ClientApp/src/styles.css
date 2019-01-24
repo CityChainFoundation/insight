@@ -5,13 +5,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 body {
-    background: url(assets/bg.jpg) no-repeat center center fixed; 
+    /* background: url(assets/bg.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover; */
+    overflow-x: hidden;
 }
 
 .loading {
     margin: auto;
+}
+
+a {
+    text-decoration: none;
+    color: #4D648D;
+}
+
+a:hover {
+    text-decoration: underline;
+    /* color: #D0E1F9; */
+    color: #283655;
 }

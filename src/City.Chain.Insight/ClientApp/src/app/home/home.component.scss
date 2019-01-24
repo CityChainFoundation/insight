@@ -1,0 +1,137 @@
+@import '~@angular/material/theming';
+
+.box {
+  // Adds a shadow for elevation level 2 with default color and full opacity:
+  @include mat-elevation(2);
+}
+
+.my-class-with-custom-shadow {
+  // Adds a shadow for elevation level 2 with color #e91e63 and 80% of the default opacity:
+  @include mat-elevation(2, #e91e63, 0.8);
+}
+
+.box {
+  border-radius: 6px;
+  padding-right: 10px;
+  @include mat-elevation-transition;
+  @include mat-elevation(2);
+
+  &:hover {
+    @include mat-elevation(8);
+  }
+}
+
+.box:first-of-type
+{
+  margin-right: 20px;
+}
+
+.box-description {
+  font-size: 0.7em;
+}
+
+.box-title {
+  padding: 10px;
+  color: white;
+  background-color: #4D658D;
+  min-width: 110px;
+  border-radius: 6px 0 0 6px;
+  margin-right: 10px;
+}
+
+.box-value {
+  font-size: 1.4em;
+}
+
+.centered {
+  text-align: center;
+}
+
+.dashboard-cards {
+ clear: both; 
+}
+
+.dashboard-card {
+  
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.community-links
+{
+  font-size: 1.6em;
+}
+
+.community-links img {
+  max-width: 240px;
+}
+
+.community-links a
+{
+  display: block;
+  margin-bottom: 6px;
+}
+
+.header-container {
+  padding: 10px;
+}
+
+.header-container > mat-card {
+  width: 50%;
+}
+
+.content-container {
+
+}
+
+.content-container > div {
+  padding: 10px;
+  width: 50%;
+}
+
+.footer {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.footer img {
+  max-width: 200px;
+}
+
+
+@media (max-width: 658px) {
+  .header-container > mat-card {
+    width: 100%;
+  }
+
+  .content-container > div {
+    width: 100%;
+  }
+
+  .box:first-of-type
+  {
+      margin-right: 0px;
+      margin-bottom: 20px;
+  }
+
+  .box-title {
+    border-radius: 6px 6px 0px 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+  }
+
+  .box {
+    padding-right: 0px;
+  }
+
+  .box-value {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .box-description {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+}

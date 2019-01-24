@@ -7,7 +7,7 @@ a.navbar-brand {
 html {
   font-size: 14px;
 }
-@media (min-width: 768px) {
+@media (max-width: 658px) {
   html {
     font-size: 16px;
   }
@@ -15,4 +15,14 @@ html {
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.navbar
+{
+  background-color: #626D71;
+  color: white !important;
 }
