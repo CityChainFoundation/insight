@@ -38,7 +38,7 @@ namespace City.Chain.Insight
             services.AddSingleton<IExchange, Exchanges>();
 
             services.AddMemoryCache();
-            //services.AddResponseCaching();
+            services.AddResponseCaching();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -133,6 +133,7 @@ namespace City.Chain.Insight
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseResponseCaching();
 
             // Register the Swagger generator and the Swagger UI middlewares
             app.UseSwagger();
@@ -152,8 +153,6 @@ namespace City.Chain.Insight
 
             //    await next();
             //});
-
-            //app.UseResponseCaching();
 
             app.UseMvc(routes =>
             {

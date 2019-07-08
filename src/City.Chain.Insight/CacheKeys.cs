@@ -10,5 +10,7 @@ namespace City.Chain.Insight
         public static string Funds { get { return "Funds"; } }
 
         public static string CurrencyDetails { get { return "CurrencyDetails"; } }
+
+        public static string MarketDetails { get { return "MarketDetails"; } }
     }
 }
