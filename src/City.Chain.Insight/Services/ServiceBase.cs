@@ -19,6 +19,8 @@ namespace City.Chain.Insight.Services
 
         public T Execute<T>(RestRequest request) where T : new()
         {
+            request.AddParameter("api-version", "1.0"); // Due to recent updates in the Nako API with versioning support, we must specify version.
+
             var response = _client.Execute<T>(request);
 
             if (response.ErrorException != null)

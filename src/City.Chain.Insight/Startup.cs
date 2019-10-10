@@ -63,7 +63,7 @@ namespace City.Chain.Insight
                     document.Info.Title = "City Chain Insight API";
                     document.Info.Description = "API for the City Chain Insight";
                     document.Info.TermsOfService = "https://city-chain.org/terms.html";
-                    document.Info.Contact = new NSwag.SwaggerContact
+                    document.Info.Contact = new NSwag.OpenApiContact
                     {
                         Name = "City Chain Foundation",
                         Email = string.Empty,
