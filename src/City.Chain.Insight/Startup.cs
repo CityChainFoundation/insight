@@ -136,7 +136,7 @@ namespace City.Chain.Insight
             app.UseResponseCaching();
 
             // Register the Swagger generator and the Swagger UI middlewares
-            app.UseSwagger();
+            app.UseOpenApi();
             app.UseSwaggerUi3();
 
             //app.Use(async (context, next) =>
